@@ -3,9 +3,12 @@ FROM node:14-alpine
 
 WORKDIR /usr/app
 
-# Install some dependencies
-COPY ./ ./
+# Install some dependencies -- add COPY ./package.json ./ 
+# <-- to prevent un-neccessary rebuilt package.json everytime
+# <-- this step will rebuilt only when we make change to package.json and steps above
+COPY ./package.json ./ 
 RUN npm install
+COPY ./ ./
 
 # Default commands
 CMD ["npm", "start"]
